@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	-- Invert
 	local e2 = Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_INVERT_LEVEL)
+	e2:SetCode(429)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE, LOCATION_MZONE)
 	c:RegisterEffect(e2)
