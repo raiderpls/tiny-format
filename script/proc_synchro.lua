@@ -79,7 +79,7 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
 				local dg
-				local lv=c:GetLevel()
+				local lv=c:GetLevel() print("82:",lv)
 				local g
 				local mgchk
 				if mg then
@@ -508,8 +508,14 @@ function Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 			end
 		end
 	end
+	-- changed this to doing the level calculation in lua as opposed to c++ cause i dont think c++ likes negatives as much as lua does
+	-- or maybe im completely wrong idk but this fixed it lol
+	local addsUpToLevel = 0
+	for gcard in aux.Next(sg) do
+		addsUpToLevel = addsUpToLevel + gcard:GetLevel()
+	end
 	return (not Synchro.CheckAdditional or Synchro.CheckAdditional(tp,sg,sc))
-	and (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
+	and (lvchk or addsUpToLevel == lv--[[sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc)]])
 	and ((sc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0)
 		or (not sc:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,sg,tp)>0))
 end
@@ -933,6 +939,7 @@ function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3
 			end
 		end
 	end
+	-- probably need to change this also but then again i dont think im gonna add another of those majestic monsters so whatever
 	if (not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
 		or (Synchro.CheckAdditional and not Synchro.CheckAdditional(tp,sg,sc)) then return false end
 	if sc:IsLocation(LOCATION_EXTRA) then
