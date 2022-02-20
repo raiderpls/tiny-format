@@ -79,7 +79,7 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
 				local dg
-				local lv=c:GetLevel() print("82:",lv)
+				local lv=c:GetLevel()
 				local g
 				local mgchk
 				if mg then
